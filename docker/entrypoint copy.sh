@@ -1,5 +1,30 @@
 #!/bin/bash
 
+cd /var/tmp/
+
+if [ ! -f "/var/www/vendor" ]; then
+
+composer create-project laravel/laravel php-dashboard
+
+cd /var/tmp/
+
+
+rm php-dashboard/.env && rm php-dashboard/.env.example
+
+cp -R php-dashboard/* /var/www/
+
+cp -R php-dashboard/.* /var/www/
+
+else
+    echo "tmp files exist."
+fi
+
+# Move Laravel files to correct place
+#RUN mv /var/tmp/temp/* /var/www/
+#RUN mv /var/tmp/temp/.* /var/www/
+
+
+
 cd /var/www/
 
 if [ ! -f ".env.example" ]; then

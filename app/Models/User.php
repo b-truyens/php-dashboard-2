@@ -75,10 +75,18 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    protected function name(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->first_name . ' ' . $this->last_name,
-        );
-    }
-}
+    protected $attributes = [
+                'is_admin' => 0,
+                'active' => 0,
+        
+    ];
+
+
+
+};
+
+function name(): Attribute{
+    return Attribute::make(
+        get: fn () => $this->first_name . ' ' . $this->last_name,
+    );
+};
