@@ -42,8 +42,8 @@ COPY ./docker/php/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
 COPY ./docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 COPY ./docker/nginx/nginx.conf /etc/nginx/nginx.conf
 
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get install -y nodejs npm
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - &&\
+apt-get install -y nodejs
 
 COPY --from=composer:2.5.8 /usr/bin/composer /usr/bin/composer
 
@@ -61,8 +61,8 @@ RUN chown -hR www-data:www-data /var/www/*
 
 
 
-RUN chmod -R 755 /var/www/storage
-RUN chmod -R 755 /var/www/bootstrap
+# RUN chmod -R 755 /var/www/storage
+# RUN chmod -R 755 /var/www/bootstrap
 
 RUN chmod 777 /var/www/docker/entrypoint.sh
 
