@@ -1,19 +1,26 @@
 #!/bin/bash
 
 
-cd /var/tmp/ && mkdir php-dashboard 
+cd /var/tmp/
+
+if [ ! -f "php-dashboard" ]; then
 
 composer create-project laravel/laravel php-dashboard
+
+else
+    echo "tmp file exists."
+fi
 
 # Move Laravel files to correct place
 #RUN mv /var/tmp/temp/* /var/www/
 #RUN mv /var/tmp/temp/.* /var/www/
 
-cd /var/tmp/ 
+cd /var/tmp/
 
-rm ./php-dashboard/.env && rm ./php-dashboard/.env.example
 
-mv ./php-dashboard/.* /var/www/
+rm php-dashboard/.env && rm php-dashboard/.env.example
+
+mv ./php-dashboard/*. /var/www/
 mv ./php-dashboard/* /var/www/
 
 cd /var/www/
@@ -30,11 +37,6 @@ if [ ! -f ".env" ]; then
     cp .env.example .env
 else
     echo "env file exists."
-fi
-
-if [ -z "$DB_PASSWORD" ]; then
-  echo "The VARIABLE is not set"
-  exit 1
 fi
 
 
