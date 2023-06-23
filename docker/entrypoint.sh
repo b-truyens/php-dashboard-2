@@ -20,8 +20,8 @@ cd /var/tmp/
 
 rm php-dashboard/.env && rm php-dashboard/.env.example
 
-mv ./php-dashboard/*. /var/www/
-mv ./php-dashboard/* /var/www/
+mv php-dashboard/.* /var/www/
+mv php-dashboard/* /var/www/
 
 cd /var/www/
 

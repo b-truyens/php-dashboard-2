@@ -24,13 +24,16 @@ RUN autoreconf -vfi && ./configure
 RUN make && make install
 RUN onig-config --cflags --libs --prefix --exec-prefix
 
+
+WORKDIR /var/www
+
+
 RUN docker-php-ext-install pdo pdo_mysql bcmath curl opcache mbstring zip exif pcntl
 RUN docker-php-ext-configure gd --with-jpeg=/usr/include/ --with-freetype=/usr/include/
 RUN docker-php-ext-install gd
 
 # RUN docker-php-ext-enable opcache
 
-WORKDIR /var/www
 
 COPY --chown=www-data:www-data . .
 
@@ -40,28 +43,21 @@ COPY ./docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 COPY ./docker/nginx/nginx.conf /etc/nginx/nginx.conf
 
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get install -y nodejs
+RUN apt-get install -y nodejs npm
 
 COPY --from=composer:2.5.8 /usr/bin/composer /usr/bin/composer
 
-RUN mkdir storage && mkdir bootstrap
 
 
-
-
-RUN chown -hR www-data:www-data /var/www
-
-
-WORKDIR /var/tmp
 
 WORKDIR /var/www
 
 RUN cd /var/www/ 
 
-
 RUN chown -hR www-data:www-data /var/www
 RUN chown -hR www-data:www-data /var/www/.*
 RUN chown -hR www-data:www-data /var/www/*
+
 
 
 
